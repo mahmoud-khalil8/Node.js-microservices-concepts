@@ -7,9 +7,17 @@ apiEndpoints:
   api:
     host: localhost
     paths: '/ip'
+  app:
+    host: localhost
+    paths: ['/','/*']
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
+  appService:
+    urls: 
+      - http://localhost:3001
+      - http://localhost:3002
+      - http://localhost:3003
 policies:
   - basic-auth
   - cors
@@ -26,8 +34,15 @@ pipelines:
     policies:
     # Uncomment `key-auth:` when instructed to in the Getting Started guide.
     # - key-auth:
-      - oauth2:
       - proxy:
           - action:
               serviceEndpoint: httpbin 
+              changeOrigin: true
+  appPipeline:
+    apiEndpoints:
+      - app
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: appService       
               changeOrigin: true
