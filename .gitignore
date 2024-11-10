@@ -1,4 +1,5 @@
 api-gateway/httpsExample/certificate.pem
 api-gateway/httpsExample/private-key-pem
 */*/node_modules
+*/node_modules
 Authentication-and-Authorization/*/.env
