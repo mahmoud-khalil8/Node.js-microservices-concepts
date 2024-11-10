@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASSWORD: password
+  producer:
+    build: ./producer
+    container_name: producer
+    depends_on:
+      - rabbitmq
+    ports:
+      - "3000:3000"
+  
+  consumer:
+    build: ./consumer
+    container_name: consumer
+    depends_on:
+      - rabbitmq
